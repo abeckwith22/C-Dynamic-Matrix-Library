@@ -58,7 +58,8 @@ void free_matrix(Matrix *mat) {
 void print_matrix(const Matrix *mat, bool debug) {
     for (int i = 0; i < mat->rows; i++) {
         printf("| ");
-        double *row = mat->data[i];  // adds a double to memory, but FAR better readability.
+        double *row =
+            mat->data[i];  // adds a double to memory sure, but has FAR better readability.
         for (int j = 0; j < mat->cols; j++) {
             if (debug) {
                 printf("row %i, col %i -> %6.2f", i, j, *(row + j));
@@ -105,23 +106,45 @@ Matrix *add_matrices(const Matrix *a, const Matrix *b) {
         return NULL;
     }
 
+    // Creates new matrix to be returned
     Matrix *new_matrix = create_matrix(a->rows, a->cols);
 
-    for (int i = 0; i < new_matrix->rows; i++) {
-        double *entry = new_matrix->data[i];
-        double *a_entry = a->data[i];
-        double *b_entry = b->data[i];
-        for (int j = 0; j < new_matrix->cols; j++) {
-            *(entry + j) = *(a_entry + j) + *(b_entry + j);
-        }
-    }
+    // Sums of matrices A and B are copied over to new_matrix.
+    for (int i = 0; i < new_matrix->rows; i++)
+        for (int j = 0; j < new_matrix->cols; j++)
+            new_matrix->data[i][j] = a->data[i][j] + b->data[i][j];
 
     return new_matrix;
 }
 
 // Multiplies two matrices together using matrix multiplication
+// naive approach
 Matrix *multiply_matrices(const Matrix *a, const Matrix *b) {
-    Matrix *new_matrix = create_matrix(a->rows, b->cols);
+    // Check if matrix-matrix multiplication is even possible given the passed matrices.
+    if (!(a->cols == b->rows)) {
+        printf("ERROR: Invalid dimensions for matrix-matrix multiplication\n");
+        printf("Matrix A's columns count (%d) must match matrix B's row count (%d)\n", a->cols,
+               b->rows);
+        return NULL;
+    }
 
-    return new_matrix;
+    // Create matrix and pass a->rows and b->cols to it. An m x p matrix.
+    Matrix *result_matrix = create_matrix(a->rows, b->cols);
+
+    // ==== Now to multiply and set the matrix properly ====
+    for (int i = 0; i < result_matrix->rows; i++) {
+        for (int j = 0; j < result_matrix->cols; j++) {
+            // resets sum
+            double sum = 0;
+            // sums all of the rows and columns to be added to result_matrix[i][j]
+            // taking what I believe to be the dot product.
+            for (int k = 0; k < a->cols; k++) {
+                sum += ((a->data[i][k]) * (b->data[k][j]));
+            }
+            // results in the dot product with a->data[i][k] and b->data[k][j]
+            result_matrix->data[i][j] = sum;
+        }
+    }
+
+    return result_matrix;
 }

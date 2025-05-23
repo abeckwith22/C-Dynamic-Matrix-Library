@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
 
     print_matrix(m2, false);
 
-    printf("---------- m3 -----------\n");
+    printf("---------- m1+m2=m3 -----------\n");
 
     Matrix *m3 = add_matrices(m1, m2);
 
@@ -53,12 +53,40 @@ int main(int argc, char **argv) {
     Matrix *m4 = create_matrix(4, 4);
     print_matrix(m4, true);
 
-    // Free matrix resources
+    printf("---------- MATRIX MULTIPLICATION -----------\n");
+
+    // Simple 2x2 matrices
+    Matrix *mult_m1 = create_matrix(2, 2);
+    Matrix *mult_m2 = create_matrix(2, 2);
+
+    // set elements for matrix 1
+    set_element(mult_m1, 0, 0, 1.0f);
+    set_element(mult_m1, 0, 1, 2.0f);
+    set_element(mult_m1, 1, 0, 3.0f);
+    set_element(mult_m1, 1, 1, 4.0f);
+
+    // Set elements for matrix 2
+    set_element(mult_m2, 0, 0, 5.0f);
+    set_element(mult_m2, 0, 1, 6.0f);
+    set_element(mult_m2, 1, 0, 7.0f);
+    set_element(mult_m2, 1, 1, 8.0f);
+
+    printf("---------- M1 MULTIPLICATION -----------\n");
+    print_matrix(mult_m1, false);
+    printf("---------- M2 MULTIPLICATION -----------\n");
+    print_matrix(mult_m2, false);
+    printf("---------- M3 (m1 x m2) MULTIPLICATION -----------\n");
+    Matrix *mult_result = multiply_matrices(mult_m1, mult_m2);
+    print_matrix(mult_result, false);
+
+    // Free all allocated matrix resources
     free_matrix(my_mat);
     free_matrix(m1);
     free_matrix(m2);
     free_matrix(m3);
     free_matrix(m4);
+    free_matrix(mult_m1);
+    free_matrix(mult_m2);
 
     return 0;
 }

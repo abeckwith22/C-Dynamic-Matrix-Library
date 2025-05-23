@@ -3,6 +3,15 @@
 
 #include <stdbool.h>
 
+// A struct for a basic implementation of a (m x n) matrix.
+// Contains:
+//
+//      int      rows           - Number of rows
+//
+//      int      cols           - Number of columns
+//
+//      double **data           - Matrix data
+//
 typedef struct {
     int rows;
     int cols;

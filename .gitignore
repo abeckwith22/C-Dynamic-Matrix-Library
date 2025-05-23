@@ -1,5 +1,6 @@
 # directories
 build/
+.cache/
 
 # vscode configs
 compile_commands.json

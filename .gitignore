@@ -1,0 +1,6 @@
+# directories
+build/
+
+# vscode configs
+compile_commands.json
+TODO.md

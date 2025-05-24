@@ -87,6 +87,7 @@ int main(int argc, char **argv) {
     free_matrix(m4);
     free_matrix(mult_m1);
     free_matrix(mult_m2);
+    free_matrix(mult_result);
 
     return 0;
 }
